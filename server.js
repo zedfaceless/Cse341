@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
 const mongodb = require('./db/connect');
 const professionalRoutes = require('./router/router');
 
@@ -14,6 +13,11 @@ app
     next();
   })
   .use('/professional', professionalRoutes);
+
+// Root route to avoid "Cannot GET /"
+app.get('/', (req, res) => {
+  res.send('Hello from your backend! Try /professional for data.');
+});
 
 mongodb.initDb((err, mongodb) => {
   if (err) {
