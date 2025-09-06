@@ -16,7 +16,7 @@ app
 
 // Root route to avoid "Cannot GET /"
 app.get('/', (req, res) => {
-  res.send('Hello from your backend! Try /professional for data.');
+  res.send('Good morning world! This is awesome for now.');
 });
 
 mongodb.initDb((err, mongodb) => {
