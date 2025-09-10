@@ -19,8 +19,8 @@ const initDb = (callback) => {
 
   MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((client) => {
-      _db = client.db(); // get default DB from URI
-      console.log('Connected to MongoDB');
+      _db = client.db('project1'); // explicitly specify your database name here
+      console.log('Connected to MongoDB Database:', _db.databaseName);
       callback(null, _db);
     })
     .catch((err) => {

@@ -1,27 +1,35 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
-// Get ALL contacts
-const getAllContacts = async (req, res, next) => {
-  const result = await mongodb.getDb().db().collection('user').find();
-  result.toArray().then((lists) => {
+// GET all contacts
+const getAllContacts = async (req, res) => {
+  try {
+    const result = await mongodb.getDb().collection('new_user').find();
+    const lists = await result.toArray();
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(lists); // Send all contacts
-  });
+    res.status(200).json(lists);
+  } catch (err) {
+    console.error("Error in getAllContacts:", err);
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
+  }
 };
 
-// Get ONE contact by ID
-const getContactById = async (req, res, next) => {
-  const contactId = new ObjectId(req.params.id); // Grab ID from URL
-  const result = await mongodb.getDb().db().collection('user').find({ _id: contactId });
-  result.toArray().then((lists) => {
+// GET contact by ID
+const getContactById = async (req, res) => {
+  try {
+    const contactId = new ObjectId(req.params.id);
+    const result = await mongodb.getDb().collection('new_user').find({ _id: contactId });
+    const lists = await result.toArray();
     if (lists.length > 0) {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(lists[0]); // Send that one contact
+      res.status(200).json(lists[0]);
     } else {
       res.status(404).json({ message: 'Contact not found' });
     }
-  });
+  } catch (err) {
+    console.error("Error in getContactById:", err);
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
+  }
 };
 
 module.exports = { getAllContacts, getContactById };
