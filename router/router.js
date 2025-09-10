@@ -1,10 +1,12 @@
 const express = require('express');
-
-const professionalController = require('../controllers/controller');
+const controller = require('../controllers/controller');
 
 const router = express.Router();
 
-// GET /feed/posts
-router.get('/', professionalController.getData);
-// localhost:3000/professional/
+// GET all contacts
+router.get('/', controller.getAllContacts);
+
+// GET contact by ID
+router.get('/:id', controller.getContactById);
+
 module.exports = router;
