@@ -3,29 +3,33 @@ info:
   version: 1.0.0
   title: Contact Management API
   description: API for managing contacts
-servers:  
-  - url: http://localhost:8080  
+servers:
+  - url: http://localhost:8080
 paths:
   /:
-
     get:
       summary: Retrieve all contacts
       responses:
-        '200':
+        "200":
           description: A list of contacts
-    post:
-      summary: Create a new contact
-      requestBody:
-        required: true  
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Contact'
+                  $ref: "#/components/schemas/Contact"
+    post:
+      summary: Create a new contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contact"
       responses:
-        '201':
+        "201":
           description: Contact created successfully
+
   /{id}:
     get:
       summary: Retrieve a contact by ID
@@ -35,11 +39,15 @@ paths:
           required: true
           schema:
             type: string
-            responses:
-              '200':
-                description: A single contact
-              '404':
-                description: Contact not found
+      responses:
+        "200":
+          description: A single contact
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+        "404":
+          description: Contact not found
     put:
       summary: Update a contact by ID
       parameters:
@@ -49,15 +57,15 @@ paths:
           schema:
             type: string
       requestBody:
-        required: true  
-          content:
-            application/json:
-              schema:
-                  $ref: '#/components/schemas/Contact'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contact"
       responses:
-        '204':
+        "204":
           description: Contact updated successfully
-  delete:
+    delete:
       summary: Delete a contact by ID
       parameters:
         - in: path
@@ -66,13 +74,14 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        "204":
           description: Contact deleted successfully
+
 components:
-  schemas: 
+  schemas:
     Contact:
       type: object
-      requiredd:
+      required:
         - firstName
         - lastName
         - email
@@ -89,5 +98,3 @@ components:
           type: string
         birthday:
           type: string
-
-          
