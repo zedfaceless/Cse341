@@ -4,9 +4,9 @@ info:
   title: Contact Management API
   description: API for managing contacts
 servers:
-  - url: http://localhost:8080
+  - url: https://cse341-wpg0.onrender.com/professional
 paths:
-  /professional:
+  /:
     get:
       summary: Retrieve all contacts
       responses:
@@ -30,7 +30,7 @@ paths:
         "201":
           description: Contact created successfully
 
-  /professional/{id}:
+  /{id}:
     get:
       summary: Retrieve a contact by ID
       parameters:
