@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /:
+  /professional:
     get:
       summary: Retrieve all contacts
       responses:
@@ -30,7 +30,7 @@ paths:
         "201":
           description: Contact created successfully
 
-  /{id}:
+  /professional/{id}:
     get:
       summary: Retrieve a contact by ID
       parameters:
@@ -90,11 +90,18 @@ components:
       properties:
         firstName:
           type: string
+          example: Alice
         lastName:
           type: string
+          example: Johnson
         email:
           type: string
+          format: email
+          example: alice@example.com
         favoriteColor:
           type: string
+          example: Green
         birthday:
           type: string
+          format: date
+          example: 1995-04-21
