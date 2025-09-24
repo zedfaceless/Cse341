@@ -23,9 +23,9 @@ exports.getEventById = async (req, res, next) => {
 // create new event
 exports.createEvent = async (req, res, next) => {
     try {
-        const Event = new Event(req.body);
-        await Event.save();
-        res.status(201).json(Event);
+        const event = new Event(req.body);
+        await event.save();
+        res.status(201).json(event);
     } catch (err) {
         next(err);
     }

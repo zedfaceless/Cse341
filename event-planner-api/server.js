@@ -2,40 +2,54 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const eventRoutes = require('./routes/eventRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+
+// Routes
+const eventRoutes = require('./routes/eventRoutes');
 const userRoutes = require('./routes/userRoutes');
+
+// Error handler
+const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-//Middleware
-app.use(cors());
+// --------------------
+// Middleware
+// --------------------
+app.use(cors({ origin: '*' })); // Allow all origins
 app.use(express.json());
 
-//swagger docs
+// --------------------
+// Swagger Docs
+// --------------------
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-//Routes
-app.use('/api/events', require('./routes/eventRoutes'));
-app.use("api/users", require("./routes/userRoutes"));
+// --------------------
+// Routes
+// --------------------
+app.use('/api/events', eventRoutes);
+app.use('/api/users', userRoutes);
 
-// handle errors middleware
-const errorHandler = require('./middleware/errorHandler');
+// --------------------
+// Error Handling Middleware
+// --------------------
 app.use(errorHandler);
 
-// connect MongoDB
+// --------------------
+// Connect MongoDB & Start Server
+// --------------------
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('MongoDB connected');
-    app.listen(PORT, () => 
-      console.log(`Server running on http://localhost:${PORT}`)
+    console.log('✅ MongoDB connected');
+    app.listen(PORT, () =>
+      console.log(`🚀 Server running on http://localhost:${PORT}`)
     );
   })
   .catch((err) => {
-    console.error('MongoDB connection error:', err);
+    console.error('❌ MongoDB connection error:', err);
   });

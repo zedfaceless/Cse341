@@ -7,17 +7,25 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/api"
+      "url": "http://localhost:8080"
     }
   ],
   "paths": {
-    "/events": {
+    "/api/events": {
       "get": {
         "summary": "Get all events",
         "tags": ["Events"],
         "responses": {
           "200": {
-            "description": "List of all events"
+            "description": "List of all events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Event" }
+                }
+              }
+            }
           }
         }
       },
@@ -28,20 +36,31 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Event"
-              }
+              "schema": { "$ref": "#/components/schemas/Event" }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Event created successfully"
+            "description": "Event created successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Event" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       }
     },
-    "/events/{id}": {
+    "/api/events/{id}": {
       "get": {
         "summary": "Get event by ID",
         "tags": ["Events"],
@@ -50,17 +69,25 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "description": "Event found"
+            "description": "Event found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Event" }
+              }
+            }
           },
           "404": {
-            "description": "Event not found"
+            "description": "Event not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       },
@@ -72,27 +99,33 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Event"
-              }
+              "schema": { "$ref": "#/components/schemas/Event" }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Event updated successfully"
+            "description": "Event updated successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Event" }
+              }
+            }
           },
           "404": {
-            "description": "Event not found"
+            "description": "Event not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       },
@@ -104,28 +137,49 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "description": "Event deleted successfully"
+            "description": "Event deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Event not found"
+            "description": "Event not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       }
     },
-    "/users": {
+    "/api/users": {
       "get": {
         "summary": "Get all users",
         "tags": ["Users"],
         "responses": {
           "200": {
-            "description": "List of all users"
+            "description": "List of all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                }
+              }
+            }
           }
         }
       },
@@ -136,20 +190,31 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
+              "schema": { "$ref": "#/components/schemas/User" }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "User created successfully"
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       }
     },
-    "/users/{id}": {
+    "/api/users/{id}": {
       "get": {
         "summary": "Get user by ID",
         "tags": ["Users"],
@@ -158,17 +223,25 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "description": "User found"
+            "description": "User found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
           },
           "404": {
-            "description": "User not found"
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       },
@@ -180,27 +253,33 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
+              "schema": { "$ref": "#/components/schemas/User" }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "User updated successfully"
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
           },
           "404": {
-            "description": "User not found"
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       },
@@ -212,17 +291,30 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "description": "User deleted successfully"
+            "description": "User deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "User not found"
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
           }
         }
       }
@@ -251,6 +343,12 @@
           "role": { "type": "string", "enum": ["admin", "user"] }
         },
         "required": ["name", "email"]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" }
+        }
       }
     }
   }
