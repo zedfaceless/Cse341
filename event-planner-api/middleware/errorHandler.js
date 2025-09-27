@@ -1,7 +1,11 @@
+// middleware/errorHandler.js
 function errorHandling(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).json({ message: err.message || 'Internal Server Error' });
+  console.error(err.stack);
+  const status = err.status || 500;
+  res.status(status).json({
+    message: err.message || 'Internal Server Error'
+    // optionally include stack in dev: stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined
+  });
 }
 
 module.exports = errorHandling;
-// --- THE END --- \\
